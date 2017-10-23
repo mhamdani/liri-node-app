@@ -35,28 +35,27 @@ if (process.argv[2] === "my-tweets") {
 
 // Spotify app
 var runSpotify = function() {
-  var Spotify = require('spotify');
+  var spotify = require('spotify');
 
-  spotify.search({ type: 'track', query: process.argv[3] }, function(error, data){
+  var searchSpotify = spotify.search({ type: 'track', query: process.argv[3] }, function(error, data){
     if (error) {
-      console.log("Error: "+ error);
+      console.log("Error; this request could not be completed.");
     }
-    if (data.tracks.items.length === 0) {
+    else {
       var path = "https://api.spotify.com/v1/tracks/7GhIk7Il098yCjg4BQjzvb";
-      sportify.get(path, function(error, data){
+      spotify.get(path, function(error, data){
         console.log("Artist: "+ data.artist[0].name);
         console.log("Song name: "+ data.name);
       });
     }
-    for (var j = 0; j < data.tracks.items.length; j++){
-      var num = j+1;
-      console.log("Result #: "+ num);
+    // for (var j = 0; j < data.tracks.items.length; j++){
+    //   var num = j+1;
+      // console.log("Result #: "+ num);
       console.log("Artist: "+ data.tracks.items[j].artists[0].name
       + "\nTrack: "+ data.tracks.items[j].name
       + "\nAlbum: "+ data.tracks.items[j].album.name
       + "\nLink to song: "+ data.tracks.items[j].href);
-    }
-  });
+    })
 };
 if (process.argv[2] === "spotify-this-song") {
   runSpotify();

@@ -1,12 +1,14 @@
 var fs = require("fs");
 var keys = require('./keys.js');
 var colors = require('colors');
+var request = require('request');
+var Twitter = require('twitter');
+var Spotify = require('node-spotify-api');
 
-console.log(keys);
+// console.log(keys);
 
 // Twitter app
 var runTwitter = function() {
-  var Twitter = require('twitter');
 
   var client =  new Twitter({
     consumer_key: keys.consumer_key,
@@ -31,32 +33,44 @@ var runTwitter = function() {
 
 if (process.argv[2] === "my-tweets") {
   runTwitter();
-}
+};
 
 // Spotify app
-var runSpotify = function() {
-  var spotify = require('spotify');
+// Function for running a Spotify search
+getMeSpotify = function(songName) {
+  var spotifyApi = new SpotifyWebApi({
+    clientId : 'fcecfc72172e4cd267473117a17cbd4d',
+    clientSecret : 'a6338157c9bb5ac9c71924cb2940e1a7',
+    redirectUri : 'http://www.example.com/callback'
+  });
 
-  var searchSpotify = spotify.search({ type: 'track', query: process.argv[3] }, function(error, data){
-    if (error) {
-      console.log("Error; this request could not be completed.");
+  if (songName === undefined) {
+    songName == "hello";
+  }
+  spotify.search(
+    {
+      type: "track",
+      query: songName
+    },
+    function(err, data) {
+      if (err) {
+        console.log("Error occurred: " + err);
+        return;
+      }
+      var songs = data.tracks.items;
+      for (var i = 0; i < songs.length; i++) {
+        console.log(i);
+        console.log("artist(s): " + songs[i].artists.map(getArtistNames));
+        console.log("song name: " + songs[i].name);
+        console.log("preview song: " + songs[i].preview_url);
+        console.log("album: " + songs[i].album.name);
+        console.log("-----------------------------------");
+      }
     }
-    else {
-      var path = "https://api.spotify.com/v1/tracks/7GhIk7Il098yCjg4BQjzvb";
-      spotify.get(path, function(error, data){
-        console.log("Artist: "+ data.artist[0].name);
-        console.log("Song name: "+ data.name);
-      });
-    }
-    // for (var j = 0; j < data.tracks.items.length; j++){
-    //   var num = j+1;
-      // console.log("Result #: "+ num);
-      console.log("Artist: "+ data.tracks.items[j].artists[0].name
-      + "\nTrack: "+ data.tracks.items[j].name
-      + "\nAlbum: "+ data.tracks.items[j].album.name
-      + "\nLink to song: "+ data.tracks.items[j].href);
-    })
+  );
+
+  if (process.argv[2] === "spotify-this-song") {
+    console.log("Finding your song..".magenta);
+    getMeSpotify();
 };
-if (process.argv[2] === "spotify-this-song") {
-  runSpotify();
-}
+};

@@ -5,15 +5,8 @@ var request = require('request');
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api')
 
-// var Spotify = ({
-//   clientId : 'fcecfc72172e4cd267473117a17cbd4d',
-//   clientSecret : 'a6338157c9bb5ac9c71924cb2940e1a7',
-//   redirectUri : 'http://www.example.com/callback'
-// });
 
-// console.log(keys);
-
-// Twitter app
+// Twitter app; 'my-twitter'
 var runTwitter = function() {
 
   var client =  new Twitter({
@@ -41,8 +34,7 @@ if (process.argv[2] === "my-tweets") {
   runTwitter();
 };
 
-// Spotify app
-// Function for running a Spotify search
+// Spotify app; 'spotify-this-song'
 var runSpotify = function() {
   var spotify = new Spotify({
     id : 'dbcd9d5ec0e04e6ba6843afca51463bb',
@@ -82,4 +74,31 @@ var runSpotify = function() {
 
 if (process.argv[2] === "spotify-this-song") {
   runSpotify();
+}
+
+// OMDB API; 'movie-this'
+var runGetMovie = function() {
+  var query = process.argv[3];
+  var search = "http://www.omdbapi.com/?t=" + query + "&y=&plot=full&tomatoes=true&apikey=40e9cece";
+
+  request.get(search, function(error, data, body){
+
+    jsonBody = JSON.parse(body);
+    // console.log(body);
+
+    if (jsonBody.Error){
+      console.log("Error :" + error);
+    } else {
+      console.log('\nMovie Title: '.cyan+ jsonBody.Title);
+      console.log('Year released: '.cyan+ jsonBody.Year);
+      console.log('IMDB rating: '.cyan + jsonBody.imdbRating);
+      console.log('Actors: '.cyan + jsonBody.Actors);
+      console.log('\nMovie synopsis: '.cyan + jsonBody.Plot);
+      console.log('\n\n');
+    }
+  });
+};
+
+if (process.argv[2]==="movie-this"){
+  runGetMovie();
 }

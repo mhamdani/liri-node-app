@@ -18,6 +18,7 @@ var logData = function(data) {
 
 // Twitter app; 'my-twitter'
 var runTwitter = function() {
+  logData("\n\n=======================\nUser searched for tweets on Twitter\n\n");
 
   var client =  new Twitter({
     consumer_key: keys.consumer_key,
@@ -42,7 +43,6 @@ var runTwitter = function() {
 
 if (process.argv[2] === "my-tweets") {
   runTwitter();
-  logData();
 };
 
 // Spotify app; 'spotify-this-song'
@@ -103,7 +103,7 @@ var runGetMovie = function() {
   request.get(search, function(error, data, body){
 
     jsonBody = JSON.parse(body);
-    logData("\n\n=======================\n"+"\nUser searched for the movie:\n" + jsonBody.Title + "\n\nReleased:\n" + jsonBody.Year);
+    logData("\n\n=======================\nUser searched for the movie:\n" + jsonBody.Title + "\n\nReleased:\n" + jsonBody.Year);
     // console.log(body);
 
     if (jsonBody.Error){

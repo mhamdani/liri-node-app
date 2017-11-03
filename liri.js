@@ -5,6 +5,16 @@ var request = require('request');
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api')
 
+// Writes to the log.txt file
+var logData = function(data) {
+  fs.appendFile("log.txt", data, function(err){
+    if (err) {
+      console.log('error loggin text: '+ err);
+    }
+    console.log("User's search was updated in log.txt".magenta);
+  });
+};
+
 
 // Twitter app; 'my-twitter'
 var runTwitter = function() {
@@ -32,6 +42,7 @@ var runTwitter = function() {
 
 if (process.argv[2] === "my-tweets") {
   runTwitter();
+  logData();
 };
 
 // Spotify app; 'spotify-this-song'
@@ -77,6 +88,7 @@ var runSpotify = function() {
 
 if (process.argv[2] === "spotify-this-song") {
   runSpotify();
+  logData();
 }
 
 // OMDB API; 'movie-this'
@@ -90,6 +102,7 @@ var runGetMovie = function() {
   request.get(search, function(error, data, body){
 
     jsonBody = JSON.parse(body);
+    logData("\n\n=======================\n"+"\nUser searched for the movie:\n" + jsonBody.Title + "\n\nReleased:\n" + jsonBody.Year);
     // console.log(body);
 
     if (jsonBody.Error){

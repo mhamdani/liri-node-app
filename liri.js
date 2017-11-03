@@ -61,6 +61,7 @@ var runSpotify = function() {
       query: process.argv[3]
     },
     function(err, data) {
+      logData("\n\n=======================\nUser searched for this track on Spotify: "+ process.argv[3] + "\n\n");
       if (err) {
         console.log("Error: " + err);
         return;

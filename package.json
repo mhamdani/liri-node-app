@@ -1,10 +1,11 @@
 {
-  "name": "package.json",
+  "name": "liri-node-app",
   "version": "1.0.0",
-  "description": "liri bot exercise",
+  "description": "LIRI will be a command line node app that takes in parameters and gives you back data.",
   "main": "keys.js",
   "dependencies": {
-    "fs": "0.0.1-security",
+    "colors": "^1.1.2",
+    "fs": "^0.0.1-security",
     "node-spotify-api": "^1.0.7",
     "request": "^2.83.0",
     "twitter": "^1.7.1"
@@ -19,7 +20,8 @@
   },
   "keywords": [
     "liri",
-    "bot"
+    "node",
+    "app"
   ],
   "author": "mhamdani",
   "license": "ISC",

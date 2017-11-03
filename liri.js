@@ -41,6 +41,9 @@ var runSpotify = function() {
     secret : 'c12a2fb0c2f042b3bf7c5a3c57de50de',
   });
 
+  if (process.argv[3] === undefined) {
+    process.argv[3] = "I Want it That Way";
+  }
   spotify.search(
     {
       type: "track",
@@ -78,6 +81,9 @@ if (process.argv[2] === "spotify-this-song") {
 
 // OMDB API; 'movie-this'
 var runGetMovie = function() {
+  if (process.argv[3] === undefined) {
+    process.argv[3] = "Mr Nobody";
+  }
   var query = process.argv[3];
   var search = "http://www.omdbapi.com/?t=" + query + "&y=&plot=full&tomatoes=true&apikey=40e9cece";
 
@@ -89,11 +95,14 @@ var runGetMovie = function() {
     if (jsonBody.Error){
       console.log("Error :" + error);
     } else {
-      console.log('\nMovie Title: '.cyan+ jsonBody.Title);
-      console.log('Year released: '.cyan+ jsonBody.Year);
+      console.log('\n\nMovie Title: '.cyan + jsonBody.Title);
+      console.log('Year released: '.cyan + jsonBody.Year);
       console.log('IMDB rating: '.cyan + jsonBody.imdbRating);
+      console.log("Rotten Tomatoes rating: ".cyan + jsonBody.Rated);
+      console.log("Country: ".cyan + jsonBody.Country);
+      console.log("Language: ".cyan + jsonBody.Language);
       console.log('Actors: '.cyan + jsonBody.Actors);
-      console.log('\nMovie synopsis: '.cyan + jsonBody.Plot);
+      console.log('\n\nMovie synopsis: '.cyan + jsonBody.Plot);
       console.log('\n\n');
     }
   });

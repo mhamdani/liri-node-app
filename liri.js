@@ -53,7 +53,7 @@ var runSpotify = function() {
   });
 
   if (process.argv[3] === undefined) {
-    process.argv[3] = "I Want it That Way";
+      process.argv[3] = "I Want it That Way";
   }
   spotify.search(
     {

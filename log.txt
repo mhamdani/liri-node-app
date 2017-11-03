@@ -15,3 +15,8 @@ User searched for this track on Spotify: hello
 =======================
 User searched for tweets on Twitter
 
+undefined
+
+=======================
+User searched for this track on Spotify: I Want it That Way
+
